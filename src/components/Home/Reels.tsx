@@ -9,14 +9,18 @@ const reels = [
 
 export default function Reels() {
     return (
-        <div className="sm:h-[50vh] grid sm:grid-cols-4 grid-cols-2">
+        <div className="h-[50vh] grid sm:grid-cols-4 grid-cols-2">
             {reels.map((reel) => (
-                <img
+                <div
                     key={reel}
-                    src={`${imgPrefix}/desktop/${reel}`}
-                    alt={reel}
-                    className="w-full object-cover h-full"
-                />
+                    className="w-full h-full overflow-hidden"
+                >
+                    <img
+                        src={`${imgPrefix}/desktop/${reel}`}
+                        alt={reel}
+                        className="w-full h-full object-cover"
+                    />
+                </div>
             ))}
         </div>
     );
