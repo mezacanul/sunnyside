@@ -1,3 +1,3 @@
-const imgPrefix = "/src/assets/images";
+const imgPrefix = "/images";
 
 export { imgPrefix };
