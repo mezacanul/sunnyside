@@ -1,56 +1,62 @@
-import { useState, useEffect, useMemo } from "react";
-
-// Using a Tuple to enforce 2-5 elements via TypeScript
+import { useState, useEffect } from "react";
 type ResponsiveValues<T> = [T, T, T?, T?, T?];
 
+/**
+ * @param values - Array of 2 to 5 values
+ * @param breakpoints - Array of pixel values (should be values.length - 1)
+ */
 export function useResponsive<T>(
     values: ResponsiveValues<T>
 ): T {
-    // Define breakpoints locally (Mobile-first: sm, md, lg, xl)
-    const breakpoints = useMemo(() => [500, 1440], []);
+    const breakpoints = [640];
+    // Logic check: We need exactly one less breakpoint than we have values
+    const activeValues = values.filter(
+        (v) => v !== undefined
+    );
 
-    // Validation
-    if (values.filter((v) => v !== undefined).length < 2) {
+    if (activeValues.length < 2) {
         throw new Error(
-            "useResponsive requires at least 2 values."
+            "useResponsive: Minimum of 2 values required."
+        );
+    }
+
+    if (breakpoints.length !== activeValues.length - 1) {
+        throw new Error(
+            `useResponsive: Expected ${
+                activeValues.length - 1
+            } breakpoints for ${
+                activeValues.length
+            } values.`
         );
     }
 
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
-        // Create media query lists for each breakpoint
-        // e.g., "(min-width: 640px)", "(min-width: 768px)", etc.
+        // Generate the media queries from the passed numbers
         const mqls = breakpoints.map((bp) =>
             window.matchMedia(`(min-width: ${bp}px)`)
         );
 
         const handler = () => {
-            // Find the highest index where the media query matches
-            // We only look up to values.length - 1
             let newIndex = 0;
-            for (let i = 0; i < values.length - 1; i++) {
-                if (mqls[i].matches) {
-                    newIndex = i + 1;
-                }
+            // If window matches breakpoint[i], we move to value[i+1]
+            for (let i = 0; i < mqls.length; i++) {
+                if (mqls[i].matches) newIndex = i + 1;
             }
             setIndex(newIndex);
         };
 
-        // Initial check
-        handler();
+        handler(); // Run on mount
 
-        // Listen for changes on each media query
         mqls.forEach((mql) =>
             mql.addEventListener("change", handler)
         );
-
-        return () => {
+        return () =>
             mqls.forEach((mql) =>
                 mql.removeEventListener("change", handler)
             );
-        };
-    }, [values.length, breakpoints]);
+    }, [values, breakpoints]);
 
     return values[index] as T;
 }

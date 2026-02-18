@@ -9,12 +9,12 @@ interface TestimonialCardProps {
 
 export default function Testimonials() {
     return (
-        <div className="h-screen flex justify-center items-center">
-            <div className="w-[70%] flex flex-col justify-center items-center gap-15">
-                <h2 className="text-gray-550 font-fraunces font-bold text-2xl text-center tracking-[0.5rem]">
+        <div className="py-20 sm:py-0 sm:h-screen flex justify-center items-center">
+            <div className="w-[80%] sm:w-[70%] flex flex-col justify-center items-center gap-15">
+                <h2 className="sm:text-2xl text-lg text-gray-550 font-fraunces font-bold text-center tracking-[0.5rem]">
                     {"CLIENT TESTIMONIALS"}
                 </h2>
-                <div className="grid grid-cols-3 gap-10">
+                <div className="flex flex-col gap-15 sm:grid sm:grid-cols-3 sm:gap-10">
                     <TestimonialCard
                         image="image-emily.jpg"
                         description="We put our trust in Sunnyside and they delivered, making sure our needs were met and deadlines were always hit."
@@ -46,7 +46,7 @@ function TestimonialCard({
     position,
 }: TestimonialCardProps) {
     return (
-        <div className="flex flex-col justify-center items-center gap-15">
+        <div className="gap-7 sm:gap-15 flex flex-col justify-center items-center">
             <img
                 src={`${imgPrefix}/${image}`}
                 alt={name}

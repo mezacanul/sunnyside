@@ -1,3 +1,4 @@
+import { cn } from "../../utils/cn";
 import { imgPrefix } from "../../utils/constants";
 
 interface ServiceCardProps {
@@ -10,7 +11,7 @@ interface ServiceCardProps {
 
 export default function Services() {
     return (
-        <div className="h-[65vh] grid grid-cols-2">
+        <div className="sm:h-[65vh] sm:grid sm:grid-cols-2 flex flex-col">
             <ServiceCard
                 title="Graphic Design"
                 description="Great design makes you memorable. We deliver artwork that underscores your brand message and captures potential clients' attention."
@@ -41,25 +42,32 @@ function ServiceCard({
         "green-800": "var(--color-green-800)",
         "blue-800": "var(--color-blue-800)",
     };
-    const textColor = colorMap[color] || color;
+    const textColor = colorMap[color] || "text-black";
     const imgSrc = `${imgPrefix}/desktop/${image}`;
     const saturateFilter = `saturate(${saturate})`;
+
+    const containerClasses = cn(
+        "flex justify-center items-end bg-cover bg-center",
+        "h-[80vh] pb-18",
+        "sm:h-full sm:pb-12"
+    );
+
     return (
         <div
-            className="flex justify-center items-end pb-12 h-full bg-cover bg-center"
+            className={containerClasses}
             style={{
                 backgroundImage: `url(${imgSrc})`,
                 filter: saturateFilter,
             }}
         >
-            <div className="flex flex-col justify-center items-center gap-4 w-[70%] text-center">
-                <h3 
+            <div className="w-[80%] sm:w-[70%] flex flex-col justify-center items-center gap-4 text-center">
+                <h3
                     className="text-4xl font-bold font-fraunces"
                     style={{ color: textColor }}
                 >
                     {title}
                 </h3>
-                <p 
+                <p
                     className="font-barlow text-base"
                     style={{ color: textColor }}
                 >

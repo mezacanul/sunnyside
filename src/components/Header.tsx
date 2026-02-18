@@ -1,11 +1,35 @@
 import Logo from "./common/Logo";
+import { cn } from "../utils/cn";
+import { useResponsive } from "../hooks/useResponsive";
+import { AiOutlineMenu } from "react-icons/ai";
 
 export default function Header() {
+    const classNames = {
+        header: cn(
+            "px-6 sm:px-8",
+            "absolute top-0 left-0 w-full py-6 flex items-center justify-between z-10"
+        ),
+        logo: cn("text-3xl sm:text-4xl"),
+    };
     return (
-        <header className="absolute top-0 left-0 w-full px-8 py-6 flex items-center justify-between z-10">
-            <Logo color="white" className="text-4xl" />
-            <Nav />
+        <header className={classNames.header}>
+            <Logo
+                color="white"
+                className={classNames.logo}
+            />
+            {useResponsive<React.ReactNode>([
+                <MobileNav />,
+                <Nav />,
+            ])}
         </header>
+    );
+}
+
+function MobileNav() {
+    return (
+        <span className="text-white text-3xl">
+            <AiOutlineMenu />
+        </span>
     );
 }
 
@@ -16,6 +40,7 @@ function Nav() {
         { href: "#projects", children: "Projects" },
         { href: "#contact", children: "CONTACT" },
     ];
+
     return (
         <nav className="flex items-center gap-8">
             {navLinks.map((link) => (
@@ -35,7 +60,10 @@ function NavLink({
     children: React.ReactNode;
 }) {
     const isContact =
-        children === "CONTACT" ? "bg-white hover:bg-white/30 text-black! hover:text-white! font-fraunces text-base! font-bold! rounded-full px-6 py-2" : "";
+        children === "CONTACT"
+            ? "bg-white hover:bg-white/30 text-black! hover:text-white! font-fraunces text-base! font-bold! rounded-full px-6 py-2"
+            : "";
+
     return (
         <a
             href={href}

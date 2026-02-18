@@ -1,42 +1,56 @@
 import { useResponsive } from "../../hooks/useResponsive";
+import { cn } from "../../utils/cn";
 import { imgPrefix } from "../../utils/constants";
 
+const bgImage = "image-header.jpg";
+const arrowDownImage = "icon-arrow-down.svg";
+
+const images = {
+    arrow: `${imgPrefix}/${arrowDownImage}`,
+    desktop: {
+        bg: `${imgPrefix}/desktop/${bgImage}`,
+    },
+    mobile: {
+        bg: `${imgPrefix}/mobile/${bgImage}`,
+    },
+};
+
 export default function Hero() {
-    const bgImage = "image-header.jpg";
-    const arrowDownImage = "icon-arrow-down.svg";
-
-    const images = {
-        arrow: `${imgPrefix}/${arrowDownImage}`,
-        desktop: {
-            bg: `${imgPrefix}/desktop/${bgImage}`,
+    const classNames = {
+        container: cn(
+            "bg-cover bg-center h-screen flex items-center justify-center"
+        ),
+        textSection: {
+            container: cn(
+                "mt-0 gap-30",
+                "sm:-mt-[10rem] sm:gap-20",
+                "flex flex-col items-center justify-center"
+            ),
+            h1: cn(
+                "text-4xl font-black tracking-[0.7rem]",
+                "sm:text-7xl sm:font-bold sm:tracking-[1.3rem]",
+                // shared
+                "text-white text-center font-fraunces"
+            ),
         },
-        mobile: {
-            bg: `${imgPrefix}/mobile/${bgImage}`,
-        },
-    };
-
-    const cssClasses = {
-        desktop: {
-            container:
-                "bg-cover bg-center h-screen flex items-center justify-center",
-        },
-        mobile: {},
     };
     return (
         <div
             id="hero-section"
-            className={cssClasses.desktop.container}
+            className={classNames.container}
             style={{
                 backgroundImage: `url(${useResponsive<string>(
                     [images.mobile.bg, images.desktop.bg]
                 )})`,
             }}
         >
-            <div className="flex flex-col items-center justify-center gap-20 -mt-[10rem]">
-                <h1 className="text-white text-center text-7xl font-bold font-fraunces tracking-[1.3rem]">
+            <div
+                className={classNames.textSection.container}
+            >
+                <h1 className={classNames.textSection.h1}>
                     {"WE ARE CREATIVES"}
                 </h1>
-                <img src={images.arrow} alt="arrow down" />
+                <img className="h-[8rem]" src={images.arrow} alt="arrow down" />
             </div>
         </div>
     );

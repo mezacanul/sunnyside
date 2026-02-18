@@ -9,7 +9,7 @@ const reels = [
 
 export default function Reels() {
     return (
-        <div className="h-[50vh] grid grid-cols-4">
+        <div className="sm:h-[50vh] grid sm:grid-cols-4 grid-cols-2">
             {reels.map((reel) => (
                 <img
                     key={reel}
