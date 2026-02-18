@@ -1,7 +1,11 @@
 import Logo from "./common/Logo";
 import { cn } from "../utils/cn";
 import { useResponsive } from "../hooks/useResponsive";
-import { AiOutlineMenu } from "react-icons/ai";
+import {
+    AiOutlineClose,
+    AiOutlineMenu,
+} from "react-icons/ai";
+import { useEffect, useState } from "react";
 
 export default function Header() {
     const classNames = {
@@ -25,26 +29,119 @@ export default function Header() {
     );
 }
 
+type Config = {
+    height: "h-0" | "h-100";
+    opacity: "opacity-0" | "opacity-100";
+    display: "absolute" | "hidden";
+};
+
 function MobileNav() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [config, setConfig] = useState<Config>({
+        height: "h-0",
+        opacity: "opacity-0",
+        display: "hidden",
+    });
+
+    useEffect(() => {
+        if (isMenuOpen) {
+            setConfig((prev) => ({
+                ...prev,
+                display: "absolute",
+            }));
+            setTimeout(() => {
+                setConfig((prev) => ({
+                    ...prev,
+                    height: "h-100",
+                    opacity: "opacity-100",
+                }));
+            }, 100);
+        } else {
+            setTimeout(() => {
+                setConfig((prev) => ({
+                    ...prev,
+                    opacity: "opacity-0",
+                    height: "h-0",
+                }));
+            }, 100);
+            setTimeout(() => {
+                setConfig((prev) => ({
+                    ...prev,
+                    display: "hidden",
+                }));
+            }, 200);
+        }
+    }, [isMenuOpen]);
+
+    function toggleMenu() {
+        setIsMenuOpen(!isMenuOpen);
+    }
     return (
-        <span className="text-white text-3xl">
-            <AiOutlineMenu />
-        </span>
+        <>
+            <span
+                className="text-white text-3xl"
+                onClick={toggleMenu}
+            >
+                {isMenuOpen ? (
+                    <AiOutlineClose />
+                ) : (
+                    <AiOutlineMenu />
+                )}
+            </span>
+            <MobileMenu
+                toggleMenu={toggleMenu}
+                config={config}
+            />
+        </>
     );
 }
 
-function Nav() {
+function MobileMenu({
+    toggleMenu,
+    config,
+}: {
+    toggleMenu: () => void;
+    config: Config;
+}) {
+    return (
+        <div
+            className={cn(
+                "absolute top-[12vh] left-0 w-full bg-white transition-all duration-300",
+                config.height,
+                config.display
+            )}
+        >
+            <div
+                className={cn(
+                    "flex h-full items-center justify-center transition-opacity duration-300",
+                    config.opacity
+                )}
+            >
+                <Nav toggleMenu={toggleMenu} />
+            </div>
+        </div>
+    );
+}
+
+function Nav({ toggleMenu }: { toggleMenu?: () => void }) {
     const navLinks = [
-        { href: "#about", children: "About" },
-        { href: "#services", children: "Services" },
-        { href: "#projects", children: "Projects" },
-        { href: "#contact", children: "CONTACT" },
+        { href: "#about-section", children: "About" },
+        { href: "#services-section", children: "Services" },
+        {
+            href: "#testimonials-section",
+            children: "Projects",
+        },
+        { href: "#footer", children: "CONTACT" },
     ];
 
     return (
-        <nav className="flex items-center gap-8">
+        <nav className="flex flex-col sm:flex-row items-center gap-8">
             {navLinks.map((link) => (
-                <NavLink key={link.href} href={link.href}>
+                <NavLink
+                    key={link.href}
+                    href={link.href}
+                    toggleMenu={toggleMenu ?? (() => {})}
+                >
                     {link.children}
                 </NavLink>
             ))}
@@ -55,19 +152,26 @@ function Nav() {
 function NavLink({
     href,
     children,
+    toggleMenu,
 }: {
     href: string;
     children: React.ReactNode;
+    toggleMenu: () => void;
 }) {
     const isContact =
         children === "CONTACT"
-            ? "bg-white hover:bg-white/30 text-black! hover:text-white! font-fraunces text-base! font-bold! rounded-full px-6 py-2"
+            ? "bg-yellow-500 sm:bg-white hover:bg-white/30 text-black! hover:text-white! font-fraunces text-base! font-bold! rounded-full px-6 py-2"
             : "";
+    const classNames = cn(
+        "text-gray-600 font-medium text-xl sm:font-normal sm:text-white sm:text-lg",
+        `hover:text-blue-800 font-barlow transition-colors duration-300 ${isContact}`
+    );
 
     return (
         <a
             href={href}
-            className={`text-white hover:text-blue-800 text-base font-barlow text-lg transition-colors duration-300 ${isContact}`}
+            onClick={toggleMenu}
+            className={classNames}
         >
             {children}
         </a>

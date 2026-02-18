@@ -11,7 +11,7 @@ interface ServiceCardProps {
 
 export default function Services() {
     return (
-        <div className="sm:h-[65vh] sm:grid sm:grid-cols-2 flex flex-col">
+        <div id="services-section" className="sm:h-[65vh] sm:grid sm:grid-cols-2 flex flex-col">
             <ServiceCard
                 title="Graphic Design"
                 description="Great design makes you memorable. We deliver artwork that underscores your brand message and captures potential clients' attention."

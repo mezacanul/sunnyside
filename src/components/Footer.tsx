@@ -13,7 +13,7 @@ interface FooterLinkProps {
 
 export default function Footer() {
     return (
-        <footer className="h-[35vh] bg-green-500 flex flex-col justify-center items-center gap-7">
+        <footer id="footer" className="h-[35vh] bg-green-500 flex flex-col justify-center items-center gap-7">
             <Logo
                 color="green-800"
                 className="text-3xl font-bold"
@@ -27,9 +27,9 @@ export default function Footer() {
 function FooterNav() {
     return (
         <nav className="flex items-center gap-20 text-green-800 font-barlow font-medium">
-            <FooterLink href="#" title="About" />
-            <FooterLink href="#" title="Services" />
-            <FooterLink href="#" title="Projects" />
+            <FooterLink href="#about-section" title="About" />
+            <FooterLink href="#services-section" title="Services" />
+            <FooterLink href="#testimonials-section" title="Projects" />
         </nav>
     );
 }

@@ -9,7 +9,10 @@ interface TestimonialCardProps {
 
 export default function Testimonials() {
     return (
-        <div className="py-20 sm:py-0 sm:h-screen flex justify-center items-center">
+        <div
+            id="testimonials-section"
+            className="py-20 sm:py-0 sm:h-screen flex justify-center items-center"
+        >
             <div className="w-[80%] sm:w-[70%] flex flex-col justify-center items-center gap-15">
                 <h2 className="sm:text-2xl text-lg text-gray-550 font-fraunces font-bold text-center tracking-[0.5rem]">
                     {"CLIENT TESTIMONIALS"}
