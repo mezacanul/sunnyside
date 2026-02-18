@@ -1,6 +1,12 @@
+import { imgPrefix } from "../../utils/constants";
+
+interface TextSectionProps {
+    title: string;
+    description: string;
+}
+
 export default function About() {
-    const { textSections, imageSections, imgPrefix } =
-        content;
+    const { textSections, imageSections } = content;
     return (
         <div className="h-screen grid grid-cols-2">
             <TextSection
@@ -9,12 +15,12 @@ export default function About() {
             />
             <img
                 className="w-full object-cover h-[50vh]"
-                src={`${imgPrefix}${imageSections[0]}`}
+                src={`${imgPrefix}/desktop/${imageSections[0]}`}
                 style={{ filter: "brightness(1.2)" }}
             />
             <img
                 className="w-full object-cover h-[50vh]"
-                src={`${imgPrefix}${imageSections[1]}`}
+                src={`${imgPrefix}/desktop/${imageSections[1]}`}
             />
             <TextSection
                 title={textSections[1].title}
@@ -27,18 +33,22 @@ export default function About() {
 function TextSection({
     title,
     description,
-}: {
-    title: string;
-    description: string;
-}) {
+}: TextSectionProps) {
     return (
         <div className="flex flex-col justify-center items-center gap-4 h-[50vh]">
             <div className="w-[70%] flex flex-col justify-center gap-7">
                 <h3 className="text-4xl font-extrabold font-fraunces text-gray-950">
                     {title}
                 </h3>
-                <p className="font-barlow text-base text-gray-600">{description}</p>
-                <a href="#" className="font-fraunces font-bold text-sm text-gray-950">LEARN MORE</a>
+                <p className="font-barlow text-base text-gray-600">
+                    {description}
+                </p>
+                <a
+                    href="#"
+                    className="font-fraunces font-bold text-sm text-gray-950"
+                >
+                    LEARN MORE
+                </a>
             </div>
         </div>
     );
@@ -57,7 +67,6 @@ const content = {
                 "Using a collaborative formula of designers, researchers, photographers, videographers, and copywriters, we'll build and extend your brand in digital places.",
         },
     ],
-    imgPrefix: "/src/assets/images/desktop/",
     imageSections: [
         "image-transform.jpg",
         "image-stand-out.jpg",

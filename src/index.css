@@ -6,8 +6,8 @@
 @theme {
     --color-red-400: hsl(7, 99%, 70%);
     --color-yellow-500: hsl(51, 100%, 49%);
-    --color-green-500: hsl(167, 34%, 41%);
-    --color-green-800: hsl(167, 40%, 24%);
+    --color-green-500: hsl(167, 40%, 67%);
+    --color-green-800: hsl(177, 40%, 30%);
     --color-blue-800: hsl(198, 62%, 26%);
 }
 

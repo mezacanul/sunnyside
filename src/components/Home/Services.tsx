@@ -1,3 +1,5 @@
+import { imgPrefix } from "../../utils/constants";
+
 interface ServiceCardProps {
     title: string;
     description: string;
@@ -33,11 +35,9 @@ function ServiceCard({
     color,
     image,
     saturate,
-}: // saturate = false,
-ServiceCardProps) {
+}: ServiceCardProps) {
     const textColor = `text-${color}`;
-    const imgPrefix = "/src/assets/images/desktop/";
-    const imgSrc = `${imgPrefix}${image}`;
+    const imgSrc = `${imgPrefix}/desktop/${image}`;
     const saturateFilter = `saturate(${saturate})`;
     return (
         <div
