@@ -14,7 +14,10 @@ interface FooterLinkProps {
 export default function Footer() {
     return (
         <footer className="h-[35vh] bg-green-500 flex flex-col justify-center items-center gap-7">
-            <Logo className="text-3xl text-green-800 font-bold" />
+            <Logo
+                color="green-800"
+                className="text-3xl font-bold"
+            />
             <FooterNav />
             <Socials />
         </footer>

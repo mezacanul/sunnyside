@@ -3,6 +3,7 @@ import { imgPrefix } from "../../utils/constants";
 interface TextSectionProps {
     title: string;
     description: string;
+    color: string;
 }
 
 export default function About() {
@@ -12,6 +13,7 @@ export default function About() {
             <TextSection
                 title={textSections[0].title}
                 description={textSections[0].description}
+                color="red"
             />
             <img
                 className="w-full object-cover h-[50vh]"
@@ -25,6 +27,7 @@ export default function About() {
             <TextSection
                 title={textSections[1].title}
                 description={textSections[1].description}
+                color="yellow"
             />
         </div>
     );
@@ -33,7 +36,13 @@ export default function About() {
 function TextSection({
     title,
     description,
+    color,
 }: TextSectionProps) {
+    const colors: Record<string, string> = {
+        red: "after:bg-red-400/40 hover:after:bg-red-400",
+        yellow: "after:bg-yellow-500/40 hover:after:bg-yellow-500",
+    };
+    const afterClasses = `after:content-[''] after:block after:w-full after:h-[8px] ${colors[color]} after:rounded-full after:-mt-1.5 after:transition-colors after:duration-300`;
     return (
         <div className="flex flex-col justify-center items-center gap-4 h-[50vh]">
             <div className="w-[70%] flex flex-col justify-center gap-7">
@@ -43,12 +52,14 @@ function TextSection({
                 <p className="font-barlow text-base text-gray-600">
                     {description}
                 </p>
+                {/* <div> */}
                 <a
                     href="#"
-                    className="font-fraunces font-bold text-sm text-gray-950"
+                    className={`font-fraunces w-fit ${afterClasses} font-bold text-sm text-gray-950`}
                 >
                     LEARN MORE
                 </a>
+                {/* </div> */}
             </div>
         </div>
     );

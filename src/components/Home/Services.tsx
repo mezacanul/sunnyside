@@ -36,25 +36,32 @@ function ServiceCard({
     image,
     saturate,
 }: ServiceCardProps) {
-    const textColor = `text-${color}`;
+    // Map color prop to CSS variable
+    const colorMap: Record<string, string> = {
+        "green-800": "var(--color-green-800)",
+        "blue-800": "var(--color-blue-800)",
+    };
+    const textColor = colorMap[color] || color;
     const imgSrc = `${imgPrefix}/desktop/${image}`;
     const saturateFilter = `saturate(${saturate})`;
     return (
         <div
-            className="flex justify-center items-end pb-8 h-full bg-cover bg-center"
+            className="flex justify-center items-end pb-12 h-full bg-cover bg-center"
             style={{
                 backgroundImage: `url(${imgSrc})`,
                 filter: saturateFilter,
             }}
         >
             <div className="flex flex-col justify-center items-center gap-4 w-[70%] text-center">
-                <h3
-                    className={`text-4xl font-bold font-fraunces ${textColor}`}
+                <h3 
+                    className="text-4xl font-bold font-fraunces"
+                    style={{ color: textColor }}
                 >
                     {title}
                 </h3>
-                <p
-                    className={`font-barlow text-base ${textColor}`}
+                <p 
+                    className="font-barlow text-base"
+                    style={{ color: textColor }}
                 >
                     {description}
                 </p>
