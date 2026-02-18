@@ -4,7 +4,7 @@ import Footer from "./Footer";
 
 export default function Layout() {
     return (
-        <div className="relative">
+        <div className="relative overflow-x-hidden">
             <Header />
             <main className="relative">
                 <Outlet />
